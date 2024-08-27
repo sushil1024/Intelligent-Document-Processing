@@ -3,8 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>HomePage</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        a {
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 18px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>This is the Home Page</h1>
+    <h1>Intelligent Document Processor</h1>
+    <a href="{% url 'process' %}">Go to Input Page</a>
 </body>
 </html>

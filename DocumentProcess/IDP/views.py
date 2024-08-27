@@ -4,6 +4,7 @@ from django.shortcuts import render, HttpResponse
 from django.http import JsonResponse
 from .forms import QueryForm
 from .helper import process_file
+from .utils import userops, docops, extractops, airesops
 from .log_config import get_logger
 
 logger = get_logger(__name__)
@@ -22,7 +23,7 @@ def inputdata(request):
 
 def documentprocess(request):
     logger.info('------------------------------------------------')
-    logger.info('Initialized Document Processing')
+    logger.info('Document Processing Initiated')
     logger.info('Invoked documentprocess')
     res = 'No Content'
 
@@ -32,7 +33,7 @@ def documentprocess(request):
     if request.method == 'POST':
         logger.info('POST request received')
 
-        user = request.POST.get('user')
+        username = request.POST.get('username')
         title = request.POST.get('title')
 
         file = request.FILES.get('file_path')
@@ -56,10 +57,27 @@ def documentprocess(request):
         if os.path.exists(file_path):
             os.remove(file_path)
 
-        logger.info(f'Response: {res}')
-        logger.info(f'Response Type: {type(res)}')
+        logger.info('Database Operations Initiated')
+        user_obj = userops(
+            username=username
+        )
+        document_obj = docops(
+            user=user_obj,
+            title=title
+        )
+        extract_obj = extractops(
+            document=document_obj,
+            text=res['text']
+        )
+        airesult_obj = airesops(
+            document=document_obj,
+            ner=res['NER'],
+            classifications=res['category'],
+            sentiment=res['sentiment']
+        )
+        logger.info('Database Operations Completed')
 
-        logger.info('Concluded Document Processing')
+        logger.info('Document Processing Completed')
         logger.info('------------------------------------------------')
 
         return JsonResponse(res)

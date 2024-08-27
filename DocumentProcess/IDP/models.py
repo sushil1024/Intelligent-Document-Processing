@@ -5,7 +5,8 @@ from django.db import models
 
 class User(models.Model):
     username = models.CharField(max_length=100, unique=True)
-    addedon = models.DateTimeField(auto_now_add=True)
+    lastonline = models.DateTimeField(auto_now_add=True)
+    logincount = models.IntegerField(default=1)
 
     def __str__(self):
         return self.username
@@ -21,20 +22,20 @@ class Document(models.Model):
 
 
 class ExtractedText(models.Model):
-    document = models.FileField(Document)
+    document = models.ForeignKey(Document, on_delete=models.CASCADE)
     text_content = models.TextField()
     addedon = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Text for Document: {self.document.title}"
+        return self.document.title
 
 
 class AIResult(models.Model):
-    document = models.FileField(Document)
+    document = models.ForeignKey(Document, on_delete=models.CASCADE)
     ner = models.TextField(blank=True)
     classifications = models.TextField(blank=True)
     sentiment = models.TextField(blank=True)
     addedon = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"AI Results for Document: {self.document.title}"
+        return self.document.title
