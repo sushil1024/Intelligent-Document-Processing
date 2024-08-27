@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Upload</title>
+</head>
+<body>
+    <h1>Upload Document</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="user">User*:</label>
+        <input type="text" id="user" name="user" required><br><br>
+
+        <label for="title">Document Title*:</label>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="document">Select Document*:</label>
+        <input type="file" id="document" name="file_path" accept=".pdf,.doc,.docx,.jpeg,.jpg,.png" required><br><br>
+
+        <label for="language">Document Language*:</label>
+        <input type="text" id="language" name="language" required><br><br>
+
+        <button type="submit">Upload</button>
+    </form>
+
+    <h2>Result</h2>
+    <pre id="result"></pre>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+            const formData = new FormData();
+            formData.append('user', document.getElementById('user').value);
+            formData.append('title', document.getElementById('title').value);
+            formData.append('file_path', document.getElementById('document').files[0]);
+            formData.append('langauge', document.getElementById('language').value);
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/documents/', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+                console.log('Result:', result);
+                document.getElementById('result').textContent = JSON.stringify(result, null, 4);
+            } catch (error) {
+                document.getElementById('result').textContent = 'Error processing document';
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>
