@@ -9,8 +9,8 @@ from .log_config import get_logger
 logger = get_logger(__name__)
 
 # library paths
-ts.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'    # OCR
-poppler_path = 'C:\\Program Files\\poppler-24.07.0\\Library\\bin'                   # pdf to img convert
+ts.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'    # OCR - Install tesseract from 'https://github.com/UB-Mannheim/tesseract/wiki'
+poppler_path = 'C:\\Program Files\\poppler-24.07.0\\Library\\bin'                   # pdf to img convert - Install Poppler from 'https://github.com/oschwartz10612/poppler-windows/releases'
 
 tokenizer = AutoTokenizer.from_pretrained('dslim/bert-base-NER')
 model = AutoModelForTokenClassification.from_pretrained('dslim/bert-base-NER')
