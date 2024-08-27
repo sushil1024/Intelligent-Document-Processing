@@ -1,2 +1,1 @@
-# Document-Processing-Django
-Intelligent Document Processing System
+# Document-Processing-Backend
