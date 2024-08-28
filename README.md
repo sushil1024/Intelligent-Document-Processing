@@ -5,7 +5,7 @@ AI Document Processing application on Django web framework.
 # Tools / Libraries Used
 1. Hugging Face - Transformers - To apply AI Models.
 2. Tesseract - Pytesseract - Extract texts from Documents.
-3. pdf2image - Poppler - Convert PDF to Image file.
+3. Poppler - pdf2image - Convert PDF to Image file.
 
 # Output:
 
