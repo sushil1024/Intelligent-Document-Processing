@@ -17,8 +17,6 @@ AI Document Processing application on Django web framework.
     Document Upload Page (with sample file operation):
     ![img.png](img/img1.png)
 
-    ![img.png](img/img2.png)
-
 
 2. Logs:
    ![img.png](img/img3.png)
